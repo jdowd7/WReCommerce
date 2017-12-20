@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WReCommerce", "WReCommerce\WReCommerce.csproj", "{6F7FAE84-F3FF-4CEB-A3D9-E71BC62A30CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WReCommerce.Test", "WReCommerce.Test\WReCommerce.Test.csproj", "{3E774F28-102E-497E-9264-057850C2F2D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6F7FAE84-F3FF-4CEB-A3D9-E71BC62A30CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F7FAE84-F3FF-4CEB-A3D9-E71BC62A30CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F7FAE84-F3FF-4CEB-A3D9-E71BC62A30CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E774F28-102E-497E-9264-057850C2F2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E774F28-102E-497E-9264-057850C2F2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E774F28-102E-497E-9264-057850C2F2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E774F28-102E-497E-9264-057850C2F2D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
