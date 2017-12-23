@@ -56,12 +56,20 @@
     <Compile Include="Common\Enums\RefPurchaseOrderStatus.cs" />
     <Compile Include="Common\Enums\RefShipmentCarrier.cs" />
     <Compile Include="Common\Enums\RefState.cs" />
+    <Compile Include="Core\Interfaces\IProductService.cs" />
+    <Compile Include="Core\Interfaces\IPurchaseOrderRequestService.cs" />
+    <Compile Include="Core\Interfaces\IPurchaseOrderService.cs" />
+    <Compile Include="Core\Services\ProductService.cs" />
+    <Compile Include="Core\Services\PurchaseOrderRequestService.cs" />
+    <Compile Include="Core\Services\PurchaseOrderService.cs" />
     <Compile Include="Data\EntityFramework\DbContext\CommercePlatformContext.cs" />
+    <Compile Include="Data\EntityFramework\Repository\PurchaseOrder\PurchaseOrderRequestRepository.cs" />
     <Compile Include="Data\Interfaces\Address\IAddressBillingRepository.cs" />
     <Compile Include="Data\Interfaces\Address\IAddressShippingRepository.cs" />
     <Compile Include="Data\Interfaces\Product\IProductRepository.cs" />
     <Compile Include="Data\Interfaces\PurchaseOrder\IPurchaseOrderLineRepository.cs" />
     <Compile Include="Data\Interfaces\PurchaseOrder\IPurchaseOrderRepository.cs" />
+    <Compile Include="Data\Interfaces\PurchaseOrder\IPurchaseOrderRequestRepository.cs" />
     <Compile Include="Data\Interfaces\PurchaseOrder\IPurchaseOrderShipmentRepository.cs" />
     <Compile Include="Data\Interfaces\Userprofile\UserMembership\IUserMembershipRepository.cs" />
     <Compile Include="Data\Interfaces\Userprofile\IUserprofileRepository.cs" />
@@ -91,8 +99,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Interfaces\" />
-    <Folder Include="Core\Services\" />
     <Folder Include="Domain\Business\Interface\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

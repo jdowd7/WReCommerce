@@ -15,17 +15,17 @@ namespace WReCommerce.Data.Models.Userprofile
         [Required]
         [DataType(DataType.Text)]
         [StringLength(64, ErrorMessage = "Exceeds max length.")]
-        public int FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [StringLength(64, ErrorMessage = "Exceeds max length.")]
-        public int LastName { get; set; }
+        public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
-        public int Email { get; set; }
+        public string Email { get; set; }
 
         // Relationships
         public ICollection<AddressBilling> BillingAddresses { get; set; }

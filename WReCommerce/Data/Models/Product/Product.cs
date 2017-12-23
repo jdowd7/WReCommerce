@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WReCommerce.Common.Enums;
 using WReCommerce.Data.Models.ProductType;
 
 namespace WReCommerce.Data.Models.Product
@@ -23,10 +24,13 @@ namespace WReCommerce.Data.Models.Product
         [DataType(DataType.Currency)]
         public decimal UnitCost { get; set; }
 
+        public RefProductCategory ProductCategory { get; set; }
 
-        // Inverse Relationships
-        public int ProductTypeId { get; set; }
-        public RefProductType ProductType { get; set; }
+        public RefProductForm ProductForm { get; set; }
+
+        //// Inverse Relationships
+        //public int ProductTypeId { get; set; }
+        //public RefProductType ProductType { get; set; }
 
     }
 }

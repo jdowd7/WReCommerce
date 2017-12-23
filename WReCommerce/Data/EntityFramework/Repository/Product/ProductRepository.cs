@@ -1,4 +1,6 @@
-﻿using WReCommerce.Data.EntityFramework.DbContext;
+﻿using System.Data.Entity.Core.Common.EntitySql;
+using System.Linq;
+using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.Interfaces.Product;
 
 namespace WReCommerce.Data.EntityFramework.Repository.Product
@@ -14,12 +16,14 @@ namespace WReCommerce.Data.EntityFramework.Repository.Product
 
         public Models.Product.Product Get(int productId)
         {
-            throw new System.NotImplementedException();
+            return _context.Products.FirstOrDefault(p => p.Id == productId);
         }
 
         public Models.Product.Product AddProduct(Models.Product.Product product)
         {
-            throw new System.NotImplementedException();
+            var pResult = _context.Products.Add(product);
+            _context.SaveChanges();
+            return pResult;
         }
 
         public Models.Product.Product UpdateProduct(int productId, Models.Product.Product product)

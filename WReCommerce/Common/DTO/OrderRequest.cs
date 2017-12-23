@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WReCommerce.Data.Models.Product;
 
 namespace WReCommerce.Common.DTO
 {
@@ -9,6 +10,6 @@ namespace WReCommerce.Common.DTO
         /// <summary>
         /// Order object, product Id(s) and quantities
         /// </summary>
-        public Dictionary<int, int> ProductIds { get; set; }
+        public Dictionary<Product, int> ProductIds { get; set; }
     }
 }
