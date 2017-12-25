@@ -1,4 +1,5 @@
-﻿using WReCommerce.Core.Interfaces;
+﻿using System.Collections.Generic;
+using WReCommerce.Core.Interfaces;
 using WReCommerce.Data.Interfaces.Product;
 using WReCommerce.Data.Models.Product;
 
@@ -21,6 +22,11 @@ namespace WReCommerce.Core.Services
         public Product AddProduct(Product product)
         {
             return _productRepository.AddProduct(product);
+        }
+
+        public ICollection<Product> GetAllProducts()
+        {
+            return _productRepository.GetAllProducts();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using WReCommerce.Data.Models.Product;
+﻿using System.Collections.Generic;
+using WReCommerce.Data.Models.Product;
 
 namespace WReCommerce.Core.Interfaces
 {
@@ -6,5 +7,6 @@ namespace WReCommerce.Core.Interfaces
     {
         Product GetProduct(int productId);
         Product AddProduct(Product product);
+        ICollection<Product> GetAllProducts();
     }
 }

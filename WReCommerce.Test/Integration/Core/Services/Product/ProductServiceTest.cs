@@ -6,6 +6,7 @@ using WReCommerce.Common.Enums;
 using WReCommerce.Core.Interfaces;
 using WReCommerce.Core.Services;
 using WReCommerce.Data.EntityFramework.DbContext;
+using WReCommerce.Data.EntityFramework.Repository.Product;
 using WReCommerce.Data.Interfaces.Product;
 using WReCommerce.Data.Models.ProductType;
 using WReCommerce.Test.Infrastructure;
@@ -25,11 +26,16 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
             mockContext = new Mock<CommercePlatformContext>();
 
             var mockSetProducts = new Mock<DbSet<Data.Models.Product.Product>>();
+
+            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.Provider).Returns(mockSetProducts.Provider);
+            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.Expression).Returns(queryableList.Expression);
+            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.ElementType).Returns(queryableList.ElementType);
+            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.GetEnumerator()).Returns(queryableList.GetEnumerator());
+
             mockContext.Setup(m => m.Products).Returns(mockSetProducts.Object);
+            mockContext.SetupAllProperties();
 
             ProductService = Container.GetInstance<ProductService>();
-
-
         }
 
         [Fact]
@@ -52,8 +58,8 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
             //Assert
             //mockContext.Verify(mc => mc.Products.Contains(product));
             mockContext.Verify();
-            var result = mockContext.Object.Products.Any();
-            result.Should().BeTrue();
+            var result = ProductService.GetAllProducts();
+            result.Should().NotBeNullOrEmpty();
         }
     }
 }
