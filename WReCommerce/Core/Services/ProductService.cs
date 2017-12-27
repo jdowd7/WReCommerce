@@ -28,5 +28,10 @@ namespace WReCommerce.Core.Services
         {
             return _productRepository.GetAllProducts();
         }
+
+        public Product DeleteProduct(Product product)
+        {
+            return _productRepository.DeleteProduct(product);
+        }
     }
 }

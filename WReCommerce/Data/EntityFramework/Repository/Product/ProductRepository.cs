@@ -37,9 +37,9 @@ namespace WReCommerce.Data.EntityFramework.Repository.Product
             throw new System.NotImplementedException();
         }
 
-        public bool DeleteProduct(int productId)
+        public Models.Product.Product DeleteProduct(Models.Product.Product product)
         {
-            throw new System.NotImplementedException();
+            return _context.Products.Remove(product);
         }
     }
 }

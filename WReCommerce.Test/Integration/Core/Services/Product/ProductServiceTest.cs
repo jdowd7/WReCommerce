@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using System.Transactions;
 using FluentAssertions;
 using Moq;
 using WReCommerce.Common.Enums;
@@ -8,7 +9,9 @@ using WReCommerce.Core.Services;
 using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.EntityFramework.Repository.Product;
 using WReCommerce.Data.Interfaces.Product;
+using WReCommerce.Data.Models.Address;
 using WReCommerce.Data.Models.ProductType;
+using WReCommerce.Data.Models.Userprofile;
 using WReCommerce.Test.Infrastructure;
 using Xunit;
 
@@ -34,6 +37,7 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
 
             mockContext.Setup(m => m.Products).Returns(mockSetProducts.Object);
             mockContext.SetupAllProperties();
+            mockContext.Verify();
 
             ProductService = Container.GetInstance<ProductService>();
         }
@@ -51,15 +55,44 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
                 UnitCost = 10.99M
             };
 
-            //Act
-            ProductService.AddProduct(product);
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                //Act
+                ProductService.AddProduct(product);
+
+                //Assert
+                var result = ProductService.GetAllProducts();
+                result.Should().NotBeNullOrEmpty();
+                result.Should().Contain(product);
+            }
+        }
+
+        [Fact]
+        public void ProductService_DeleteValidProduct_ShouldReturnNoProducts()
+        {
+
+            var product = new Data.Models.Product.Product
+            {
+                Name = "TestVideo_1",
+                ProductMembershipValue = 0,
+                ProductCategory = RefProductCategory.Video,
+                ProductForm = RefProductForm.Physical,
+                UnitCost = 10.99M
+            };
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+
+                //Act
+                ProductService.AddProduct(product);
 
 
-            //Assert
-            //mockContext.Verify(mc => mc.Products.Contains(product));
-            mockContext.Verify();
-            var result = ProductService.GetAllProducts();
-            result.Should().NotBeNullOrEmpty();
+                //Assert
+                var result = ProductService.GetAllProducts();
+                result.Should().BeNullOrEmpty();
+                result.Should().NotContain(product);
+            }
         }
     }
 }

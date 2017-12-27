@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WReCommerce.Data.Models.Address.BaseEntities;
 
 namespace WReCommerce.Data.Models.Address
 {
-    public class AddressShipping
+    public class AddressShipping : AddressBase
     {
         // Props
         [Key]

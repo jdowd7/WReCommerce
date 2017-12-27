@@ -4,7 +4,9 @@ using SimpleInjector;
 using WReCommerce.Core.Interfaces;
 using WReCommerce.Core.Services;
 using WReCommerce.Data.EntityFramework.Repository.Product;
+using WReCommerce.Data.EntityFramework.Repository.Userprofile;
 using WReCommerce.Data.Interfaces.Product;
+using WReCommerce.Data.Interfaces.Userprofile;
 
 namespace WReCommerce.Test.Infrastructure
 {
@@ -16,10 +18,11 @@ namespace WReCommerce.Test.Infrastructure
         public TestContainer()
         {
             Container = new Container();
-            var lifeStyle = Lifestyle.Singleton;
+            var lifeStyle = Lifestyle.Scoped;
 
             Container.Register<IProductService, ProductService>(lifeStyle);
-            Container.Register<IProductRepository, ProductRepository>();
+            Container.Register<IProductRepository, ProductRepository>(lifeStyle);
+            Container.Register<IUserprofileRepository, UserprofileRepository>(lifeStyle);
         }
 
         private static Container GetAutoMockingContainer()

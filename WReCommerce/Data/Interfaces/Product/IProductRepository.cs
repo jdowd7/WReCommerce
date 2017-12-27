@@ -9,7 +9,7 @@ namespace WReCommerce.Data.Interfaces.Product
         ICollection<Models.Product.Product> GetAllProducts();
         Models.Product.Product AddProduct(Models.Product.Product product);
         Models.Product.Product UpdateProduct(int productId, Models.Product.Product product);
-        bool DeleteProduct(int productId);
+        Models.Product.Product DeleteProduct(Models.Product.Product product);
 
 
     }

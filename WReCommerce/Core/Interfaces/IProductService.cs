@@ -8,5 +8,6 @@ namespace WReCommerce.Core.Interfaces
         Product GetProduct(int productId);
         Product AddProduct(Product product);
         ICollection<Product> GetAllProducts();
+        Product DeleteProduct(Product product);
     }
 }
