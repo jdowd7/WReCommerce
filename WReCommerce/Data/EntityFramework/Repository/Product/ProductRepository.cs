@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.Core.Common.EntitySql;
 using System.Linq;
 using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.Interfaces.Product;

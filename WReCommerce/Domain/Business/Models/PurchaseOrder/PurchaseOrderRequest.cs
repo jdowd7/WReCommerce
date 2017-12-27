@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using WReCommerce.Common.DTO;
-using WReCommerce.Common.Enums;
-using WReCommerce.Core.Interfaces;
-using WReCommerce.Core.Services;
-using WReCommerce.Data.Models.Product;
-using WReCommerce.Data.Models.PurchaseOrder;
 
 namespace WReCommerce.Domain.Business.Models.PurchaseOrder
 {

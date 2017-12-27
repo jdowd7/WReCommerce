@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Linq;
 using System.Transactions;
 using FluentAssertions;
 using Moq;
@@ -7,11 +6,7 @@ using WReCommerce.Common.Enums;
 using WReCommerce.Core.Interfaces;
 using WReCommerce.Core.Services;
 using WReCommerce.Data.EntityFramework.DbContext;
-using WReCommerce.Data.EntityFramework.Repository.Product;
 using WReCommerce.Data.Interfaces.Product;
-using WReCommerce.Data.Models.Address;
-using WReCommerce.Data.Models.ProductType;
-using WReCommerce.Data.Models.Userprofile;
 using WReCommerce.Test.Infrastructure;
 using Xunit;
 

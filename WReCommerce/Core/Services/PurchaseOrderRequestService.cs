@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using WReCommerce.Common.DTO;
 using WReCommerce.Common.Enums;
 using WReCommerce.Common.Utility;
 using WReCommerce.Core.Interfaces;
-using WReCommerce.Data.EntityFramework.Repository.PurchaseOrder;
 using WReCommerce.Data.Interfaces.PurchaseOrder;
 using WReCommerce.Data.Interfaces.Userprofile.UserMembership;
 using WReCommerce.Data.Models.PurchaseOrder;

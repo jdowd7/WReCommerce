@@ -1,6 +1,4 @@
-﻿using WReCommerce.Common.DTO;
-using WReCommerce.Data.Models.PurchaseOrder;
-using WReCommerce.Domain.Business.Models.PurchaseOrder;
+﻿using WReCommerce.Data.Models.PurchaseOrder;
 
 namespace WReCommerce.Data.Interfaces.PurchaseOrder
 {

@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WReCommerce.Common.Enums;
-using WReCommerce.Data.Models.ProductType;
 
 namespace WReCommerce.Data.Models.Product
 {

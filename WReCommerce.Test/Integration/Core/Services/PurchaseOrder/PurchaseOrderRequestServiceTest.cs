@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
@@ -10,18 +9,12 @@ using WReCommerce.Common.Enums;
 using WReCommerce.Core.Interfaces;
 using WReCommerce.Core.Services;
 using WReCommerce.Data.EntityFramework.DbContext;
-using WReCommerce.Data.EntityFramework.Repository.Product;
-using WReCommerce.Data.Interfaces.Product;
 using WReCommerce.Data.Interfaces.Userprofile;
-using WReCommerce.Data.Models.Address;
-using WReCommerce.Data.Models.ProductType;
-using WReCommerce.Data.Models.PurchaseOrder;
 using WReCommerce.Data.Models.Userprofile;
-using WReCommerce.Domain.Business.Models.PurchaseOrder;
 using WReCommerce.Test.Infrastructure;
 using Xunit;
 
-namespace WReCommerce.Test.Integration.Core.Services.Product
+namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
 {
     public class PurchaseOrderRequestServiceTest : TestContainer
     {
@@ -39,7 +32,7 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
             mockContext = new Mock<CommercePlatformContext>();
 
             var mockSetProducts = new Mock<DbSet<Data.Models.Product.Product>>();
-            var mockSetPurchaseOrders= new Mock<DbSet<PurchaseOrder>>();
+            var mockSetPurchaseOrders= new Mock<DbSet<Data.Models.PurchaseOrder.PurchaseOrder>>();
             var mockSetUserprofiles = new Mock<DbSet<Userprofile>>();
 
             //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.Provider).Returns(mockSetProducts.Provider);
@@ -59,7 +52,7 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
         }
 
         [Fact]
-        public void ProductService_AddValidProduct_ShouldReturnAddedProduct()
+        public void PurchaseOrderRequestService_AddValidProductUserRequest_ShouldReturnTrackingMembership()
         {
             using (TransactionScope transactionScope = new TransactionScope())
             {

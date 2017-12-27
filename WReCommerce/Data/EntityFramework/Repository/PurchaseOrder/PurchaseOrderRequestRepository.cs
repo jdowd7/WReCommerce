@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using WReCommerce.Common.DTO;
-using WReCommerce.Common.Enums;
-using WReCommerce.Data.EntityFramework.DbContext;
+﻿using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.Interfaces.PurchaseOrder;
 using WReCommerce.Data.Models.PurchaseOrder;
-using WReCommerce.Domain.Business.Models.PurchaseOrder;
 
 namespace WReCommerce.Data.EntityFramework.Repository.PurchaseOrder
 {
