@@ -1,4 +1,5 @@
-﻿using WReCommerce.Data.EntityFramework.DbContext;
+﻿using System.Linq;
+using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.Interfaces.PurchaseOrder;
 using WReCommerce.Data.Models.PurchaseOrder;
 
@@ -16,12 +17,14 @@ namespace WReCommerce.Data.EntityFramework.Repository.PurchaseOrder
 
         public PurchaseOrderShipment Get(int purchaseOrderLineId)
         {
-            throw new System.NotImplementedException();
+            return _context.PurchaseOrderShipments.FirstOrDefault(pos => pos.Id == purchaseOrderLineId);
         }
 
-        public PurchaseOrderShipment AddPurchaseOrderShipment(PurchaseOrderShipment purchaseOrderLine)
+        public PurchaseOrderShipment AddPurchaseOrderShipment(PurchaseOrderShipment purchaseOrderLineShipment)
         {
-            throw new System.NotImplementedException();
+            var result = _context.PurchaseOrderShipments.Add(purchaseOrderLineShipment);
+            _context.SaveChanges();
+            return result;
         }
 
         public PurchaseOrderShipment UpdatePurchaseOrderShipment(int purchaseOrderLineId, PurchaseOrderShipment purchaseOrderLine)

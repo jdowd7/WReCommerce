@@ -63,17 +63,32 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
         {
             using (TransactionScope transactionScope = new TransactionScope())
             {
-                var product = new Data.Models.Product.Product
+                // Set up and add a book and membership
+                var productBook = new Data.Models.Product.Product
                 {
-                    Name = "TestVideo_1",
+                    Name = "TestBook1",
                     ProductMembershipValue = 0,
-                    ProductCategory = RefProductCategory.Video,
-                    ProductForm = RefProductForm.Membership,
-                    UnitCost = 10.99M
+                    ProductCategory = RefProductCategory.Book,
+                    ProductForm = RefProductForm.Physical,
+                    UnitCost = 10.99M,
+                    Weight = 1.00M
+
                 };
 
-                ProductService.AddProduct(product);
+                var productInput1 = ProductService.AddProduct(productBook);
 
+                var productMem = new Data.Models.Product.Product
+                {
+                    Name = "TestMembership3",
+                    ProductMembershipValue = 90, // 90 days
+                    ProductCategory = RefProductCategory.Video,
+                    ProductForm = RefProductForm.Membership,
+                    UnitCost = 30.00M
+                };
+
+                var productInput2 = ProductService.AddProduct(productMem);
+
+                #region maybe use later
                 //var addBill = new AddressBilling
                 //{
                 //    Street1 = "1000 Test Dr.",
@@ -92,6 +107,9 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
                 //    Zip = 01234
                 //};
 
+                #endregion
+
+                // Set up and add a user 
                 var user = new Userprofile
                 {
                     FirstName = "testF",
@@ -99,23 +117,32 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
                     Email = "testEmail1@gmail.com"
                 };
 
-                var 
+                var userprofileInput = UserprofileRepository.AddUserprofile(user);
 
-
-
-            var orderReq = new OrderRequest
-            {
-
-                
-            };
-
+                // Setup DTO orderRequest, 1 video membership and 2 books
+                var orderReq = new OrderRequest
+                {
+                    UserprofileId = userprofileInput.Id,
+                    ProductIds = new Dictionary<Data.Models.Product.Product, int>
+                    {
+                        { productInput1, 2 },
+                        { productInput2, 1 }
+                    }
+                };
 
                 //Act
-
+                var result = PurchaseOrderRequestService.AddPurchaseOrderRequest(orderReq);
 
                 //Assert
-                var result = ProductService.GetAllProducts();
-                result.Should().NotBeNullOrEmpty();
+                result.Success.Should().BeTrue();
+
+                // check business reqs on shipment
+                result.PurchaseOrder.PurchaseOrderShipments.Should().NotBeEmpty();
+                result.PurchaseOrder.PurchaseOrderShipments.FirstOrDefault()?.TrackingNumber.Should().HaveLength(32);
+                
+                // check business reqs on membership
+                result.PurchaseOrder.Userprofile.UserMemberships.Should().NotBeEmpty();
+                result.PurchaseOrder.Userprofile.UserMemberships.FirstOrDefault()?.MembershipRemaining.Should().Be(90);
             }
 
      

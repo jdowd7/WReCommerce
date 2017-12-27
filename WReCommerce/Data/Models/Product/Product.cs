@@ -24,6 +24,9 @@ namespace WReCommerce.Data.Models.Product
         [DataType(DataType.Currency)]
         public decimal UnitCost { get; set; }
 
+        [DefaultValue(0)]
+        public decimal Weight { get; set; }
+
         public RefProductCategory ProductCategory { get; set; }
 
         public RefProductForm ProductForm { get; set; }

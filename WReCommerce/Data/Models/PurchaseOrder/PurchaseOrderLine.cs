@@ -35,11 +35,11 @@ namespace WReCommerce.Data.Models.PurchaseOrder
 
         // POLine can have 1 Product
         public int ProductId { get; set; }
-        public Product.Product Products { get; set; }
+        public Product.Product Product { get; set; }
 
         // POLine can have 1 POShip
         public int PurchaseOrderShipment { get; set; }
-        public PurchaseOrderShipment Type { get; set; }
+        public PurchaseOrderShipment PurchaePurchaseOrderShipment { get; set; }
 
 
 

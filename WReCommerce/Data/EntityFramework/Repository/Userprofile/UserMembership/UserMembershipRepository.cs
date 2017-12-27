@@ -1,4 +1,5 @@
-﻿using WReCommerce.Data.EntityFramework.DbContext;
+﻿using System.Linq;
+using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.Interfaces.Userprofile.UserMembership;
 
 namespace WReCommerce.Data.EntityFramework.Repository.Userprofile.UserMembership
@@ -14,12 +15,14 @@ namespace WReCommerce.Data.EntityFramework.Repository.Userprofile.UserMembership
 
         public Models.Userprofile.UserMembership Get(int userprofileId)
         {
-            throw new System.NotImplementedException();
+            return _context.UserMemberships.FirstOrDefault(um => um.Id == userprofileId);
         }
 
         public Models.Userprofile.UserMembership AddUserMembership(Models.Userprofile.UserMembership userprofile)
         {
-            throw new System.NotImplementedException();
+            var result = _context.UserMemberships.Add(userprofile);
+            _context.SaveChanges();
+            return result;
         }
 
         public Models.Userprofile.UserMembership UpdateUserMembership(int userprofileId, Models.Userprofile.UserMembership userprofile)

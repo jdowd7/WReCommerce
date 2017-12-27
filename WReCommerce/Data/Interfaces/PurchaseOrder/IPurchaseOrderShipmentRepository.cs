@@ -5,8 +5,8 @@ namespace WReCommerce.Data.Interfaces.PurchaseOrder
     public interface IPurchaseOrderShipmentRepository
     {
         PurchaseOrderShipment Get(int purchaseOrderLineId);
-        PurchaseOrderShipment AddPurchaseOrderShipment(PurchaseOrderShipment purchaseOrderLine);
-        PurchaseOrderShipment UpdatePurchaseOrderShipment(int purchaseOrderLineId, PurchaseOrderShipment purchaseOrderLine);
-        bool DeletePurchaseOrderShipment(int purchaseOrderLineId);
+        PurchaseOrderShipment AddPurchaseOrderShipment(PurchaseOrderShipment purchaseOrderLineShipment);
+        PurchaseOrderShipment UpdatePurchaseOrderShipment(int purchaseOrderLineId, PurchaseOrderShipment purchaseOrderLineShipment);
+        bool DeletePurchaseOrderShipment(int purchaseOrderLineShipmentId);
     }
 }

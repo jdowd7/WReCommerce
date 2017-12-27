@@ -56,6 +56,7 @@
     <Compile Include="Common\Enums\RefPurchaseOrderStatus.cs" />
     <Compile Include="Common\Enums\RefShipmentCarrier.cs" />
     <Compile Include="Common\Enums\RefState.cs" />
+    <Compile Include="Common\Utility\ShippingLabelGenerator.cs" />
     <Compile Include="Core\Interfaces\IProductService.cs" />
     <Compile Include="Core\Interfaces\IPurchaseOrderRequestService.cs" />
     <Compile Include="Core\Interfaces\IPurchaseOrderService.cs" />

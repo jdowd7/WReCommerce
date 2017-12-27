@@ -16,6 +16,9 @@ namespace WReCommerce.Data.Models.PurchaseOrder
         [DefaultValue("")]
         public string TrackingNumber { get; set; }
 
+        [DefaultValue("")]
+        public string ShipmentStatus { get; set; } // be better as enum
+
         [DefaultValue(1)]
         [Range(0, 9999999999999, ErrorMessage = "Must be a positive number.")]
         public int Items { get; set; }
