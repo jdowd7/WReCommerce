@@ -66,7 +66,7 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
         [Fact]
         public void ProductService_DeleteValidProduct_ShouldReturnNoProducts()
         {
-
+            // Arrange
             var product = new Data.Models.Product.Product
             {
                 Name = "TestVideo_1",
@@ -79,8 +79,11 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
             using (TransactionScope transactionScope = new TransactionScope())
             {
 
+                var productResult = ProductService.AddProduct(product);
+
                 //Act
-                ProductService.AddProduct(product);
+                ProductService.DeleteProduct(productResult);
+
 
 
                 //Assert

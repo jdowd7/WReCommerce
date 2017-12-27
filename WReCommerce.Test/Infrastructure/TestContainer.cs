@@ -15,24 +15,26 @@ using WReCommerce.Data.Interfaces.Userprofile.UserMembership;
 namespace WReCommerce.Test.Infrastructure
 {
     
-    public class TestContainer
+    public class TestContainer : IDisposable
     {
         public Container Container { get; set; }
 
         public TestContainer()
         {
             Container = new Container();
-            var lifeStyle = Lifestyle.Scoped;
+            var lifeStyle = Lifestyle.Singleton;
 
             // services
-            Container.Register<IProductService, ProductService>(lifeStyle);
-            Container.Register<IPurchaseOrderRequestService, PurchaseOrderRequestService>(lifeStyle);
+            Container.Register<IProductService, ProductService>();
+            Container.Register<IPurchaseOrderRequestService, PurchaseOrderRequestService>();
+            Container.Register<IUserprofileService, UserprofileService>();
 
             // repos
-            Container.Register<IProductRepository, ProductRepository>(lifeStyle);
-            Container.Register<IUserprofileRepository, UserprofileRepository>(lifeStyle);
-            Container.Register<IUserMembershipRepository, UserMembershipRepository>(lifeStyle);
-            Container.Register<IPurchaseOrderShipmentRepository, PurchaseOrderShipmentRepository>(lifeStyle);
+            Container.Register<IProductRepository, ProductRepository>();
+            Container.Register<IUserprofileRepository, UserprofileRepository>();
+            Container.Register<IUserMembershipRepository, UserMembershipRepository>();
+            Container.Register<IPurchaseOrderShipmentRepository, PurchaseOrderShipmentRepository>();
+            Container.Register<IPurchaseOrderRequestRepository, PurchaseOrderRequestRepository>();
 
         }
 

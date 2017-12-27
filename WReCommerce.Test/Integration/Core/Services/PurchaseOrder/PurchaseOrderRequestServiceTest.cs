@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Transactions;
 using FluentAssertions;
 using Moq;
@@ -10,6 +11,7 @@ using WReCommerce.Core.Interfaces;
 using WReCommerce.Core.Services;
 using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.Interfaces.Userprofile;
+using WReCommerce.Data.Models.PurchaseOrder;
 using WReCommerce.Data.Models.Userprofile;
 using WReCommerce.Test.Infrastructure;
 using Xunit;
@@ -22,18 +24,22 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
 
         public IProductService ProductService { get; set; }
 
-        // did this for brevity, you would use the service level
-        public IUserprofileRepository UserprofileRepository { get; set; }
+        public IUserprofileService UserprofileService { get; set; }
 
         public Mock<CommercePlatformContext> mockContext { get; set; }
 
         public PurchaseOrderRequestServiceTest()
         {
+
             mockContext = new Mock<CommercePlatformContext>();
+            Database.SetInitializer<CommercePlatformContext>(null);
+
 
             var mockSetProducts = new Mock<DbSet<Data.Models.Product.Product>>();
             var mockSetPurchaseOrders= new Mock<DbSet<Data.Models.PurchaseOrder.PurchaseOrder>>();
             var mockSetUserprofiles = new Mock<DbSet<Userprofile>>();
+            var mockSetUsermembership = new Mock<DbSet<UserMembership>>();
+            var mockSetPurchaseOrderShipment = new Mock<DbSet<PurchaseOrderShipment>>();
 
             //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.Provider).Returns(mockSetProducts.Provider);
             //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.Expression).Returns(queryableList.Expression);
@@ -43,12 +49,15 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
             mockContext.Setup(m => m.Products).Returns(mockSetProducts.Object);
             mockContext.Setup(m => m.PurchaseOrders).Returns(mockSetPurchaseOrders.Object);
             mockContext.Setup(m => m.Userprofiles).Returns(mockSetUserprofiles.Object);
+            mockContext.Setup(m => m.PurchaseOrderShipments).Returns(mockSetPurchaseOrderShipment.Object);
+            mockContext.Setup(m => m.UserMemberships).Returns(mockSetUsermembership.Object);
+
             mockContext.SetupAllProperties();
             mockContext.Verify();
 
-            UserprofileRepository = Container.GetInstance<IUserprofileRepository>();
-            PurchaseOrderRequestService = Container.GetInstance<PurchaseOrderRequestService>();
-            ProductService = Container.GetInstance<ProductService>();
+            UserprofileService = Container.GetInstance<IUserprofileService>();
+            PurchaseOrderRequestService = Container.GetInstance<IPurchaseOrderRequestService>();
+            ProductService = Container.GetInstance<IProductService>();
         }
 
         [Fact]
@@ -110,7 +119,7 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
                     Email = "testEmail1@gmail.com"
                 };
 
-                var userprofileInput = UserprofileRepository.AddUserprofile(user);
+                var userprofileInput = UserprofileService.AddUserprofile(user);
 
                 // Setup DTO orderRequest, 1 video membership and 2 books
                 var orderReq = new OrderRequest
