@@ -28,11 +28,13 @@ namespace WReCommerce.Test.Infrastructure
             Container.Register<IProductService, ProductService>();
             Container.Register<IPurchaseOrderRequestService, PurchaseOrderRequestService>();
             Container.Register<IUserprofileService, UserprofileService>();
+            Container.Register<IPurchaseOrderService, PurchaseOrderService>();
 
             // repos
             Container.Register<IProductRepository, ProductRepository>();
             Container.Register<IUserprofileRepository, UserprofileRepository>();
             Container.Register<IUserMembershipRepository, UserMembershipRepository>();
+            Container.Register<IPurchaseOrderRepository, PurchaseOrderRepository>();
             Container.Register<IPurchaseOrderShipmentRepository, PurchaseOrderShipmentRepository>();
             Container.Register<IPurchaseOrderRequestRepository, PurchaseOrderRequestRepository>();
 

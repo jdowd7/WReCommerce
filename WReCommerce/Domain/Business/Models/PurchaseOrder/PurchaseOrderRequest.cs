@@ -10,12 +10,12 @@ namespace WReCommerce.Domain.Business.Models.PurchaseOrder
 
             if (purchaseOrder.Id > 0)
             {
-                this.Success = false;
+                this.Success = true;
                 this.PurchaseOrder = purchaseOrder;
             }
             else
             {
-                this.Success = true;
+                this.Success = false;
                 this.PurchaseOrder = purchaseOrder;
             }
         }

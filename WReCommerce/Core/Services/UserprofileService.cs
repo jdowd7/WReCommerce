@@ -22,5 +22,10 @@ namespace WReCommerce.Core.Services
         {
             return _UserprofileRepository.AddUserprofile(userprofile);
         }
+
+        public Userprofile UpdateUserprofile(int userprofileId, Userprofile userprofile)
+        {
+            return _UserprofileRepository.UpdateUserprofile(userprofileId, userprofile);
+        }
     }
 }

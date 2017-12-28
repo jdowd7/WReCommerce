@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Caching;
 using System.Transactions;
 using FluentAssertions;
 using Moq;
@@ -32,7 +31,9 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
         {
 
             mockContext = new Mock<CommercePlatformContext>();
-            Database.SetInitializer<CommercePlatformContext>(null);
+
+            //Database.SetInitializer<CommercePlatformContext>(null);
+            mockContext.Object.Configuration.LazyLoadingEnabled = true;
 
 
             var mockSetProducts = new Mock<DbSet<Data.Models.Product.Product>>();
@@ -116,7 +117,9 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
                 {
                     FirstName = "testF",
                     LastName = "testL",
-                    Email = "testEmail1@gmail.com"
+                    Email = "testEmail1@gmail.com",
+                    UserMemberships = new List<UserMembership>(),
+                    PurchaseOrders = new List<Data.Models.PurchaseOrder.PurchaseOrder>()
                 };
 
                 var userprofileInput = UserprofileService.AddUserprofile(user);
@@ -139,12 +142,12 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
                 result.Success.Should().BeTrue();
 
                 // check business reqs on shipment
-                result.PurchaseOrder.PurchaseOrderShipments.Should().NotBeEmpty();
-                result.PurchaseOrder.PurchaseOrderShipments.FirstOrDefault()?.TrackingNumber.Should().HaveLength(32);
+                result.PurchaseOrder.PurchaseOrderShipments.ToList().Should().NotBeEmpty();
+                result.PurchaseOrder.PurchaseOrderShipments.ToList().FirstOrDefault()?.TrackingNumber.Should().HaveLength(32);
                 
                 // check business reqs on membership
-                result.PurchaseOrder.Userprofile.UserMemberships.Should().NotBeEmpty();
-                result.PurchaseOrder.Userprofile.UserMemberships.FirstOrDefault()?.MembershipRemaining.Should().Be(90);
+                result.PurchaseOrder.Userprofile.UserMemberships.ToList().Should().NotBeEmpty();
+                result.PurchaseOrder.Userprofile.UserMemberships.ToList().FirstOrDefault()?.MembershipRemaining.Should().Be(90);
             }
 
      

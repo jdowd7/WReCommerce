@@ -22,6 +22,7 @@ namespace WReCommerce.Test.Integration.Core.Services.Product
         public ProductServiceTest()
         {
             mockContext = new Mock<CommercePlatformContext>();
+            Database.SetInitializer<CommercePlatformContext>(null);
 
             var mockSetProducts = new Mock<DbSet<Data.Models.Product.Product>>();
 

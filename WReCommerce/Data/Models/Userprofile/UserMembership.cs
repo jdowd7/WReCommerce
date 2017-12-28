@@ -16,19 +16,19 @@ namespace WReCommerce.Data.Models.Userprofile
         public decimal MembershipRemaining { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateAdded { get; set; }
+        public DateTime? DateAdded { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateModified { get; set; }
+        public DateTime? DateModified { get; set; }
 
         public RefProductCategory MembershipCategory { get; set; }
 
         // Inverse Relationships
         public int UserProfileId { get; set; }
-        public Userprofile Userprofile { get; set; }
+        public virtual Userprofile Userprofile { get; set; }
 
         public int ProductId { get; set; }
-        public Product.Product Product { get; set; }
+        public virtual Product.Product Product { get; set; }
         
 
 

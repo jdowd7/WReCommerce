@@ -1,4 +1,5 @@
-﻿using WReCommerce.Data.EntityFramework.DbContext;
+﻿using System.Linq;
+using WReCommerce.Data.EntityFramework.DbContext;
 using WReCommerce.Data.Interfaces.Userprofile;
 
 namespace WReCommerce.Data.EntityFramework.Repository.Userprofile
@@ -15,17 +16,27 @@ namespace WReCommerce.Data.EntityFramework.Repository.Userprofile
 
         public Models.Userprofile.Userprofile Get(int userprofileId)
         {
-            throw new System.NotImplementedException();
+            return _context.Userprofiles
+                .Include("PurchaseOrders")
+                //.Include("PurchaseOrderShipments")
+                .Include("UserMemberships")
+                .FirstOrDefault(x => x.Id == userprofileId);
         }
 
         public Models.Userprofile.Userprofile AddUserprofile(Models.Userprofile.Userprofile userprofile)
         {
-            throw new System.NotImplementedException();
+            var result = _context.Userprofiles.Add(userprofile);
+            _context.SaveChanges();
+            return result;
         }
 
         public Models.Userprofile.Userprofile UpdateUserprofile(int userprofileId, Models.Userprofile.Userprofile userprofile)
         {
-            throw new System.NotImplementedException();
+            var userprofileResult = Get(userprofileId);
+            _context.Entry(userprofileResult).CurrentValues.SetValues(userprofile);
+            _context.SaveChanges();
+            return Get(userprofileId);
+
         }
 
         public bool DeleteUserprofile(int userprofileId)

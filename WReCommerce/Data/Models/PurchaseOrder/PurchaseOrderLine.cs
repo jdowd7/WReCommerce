@@ -22,24 +22,24 @@ namespace WReCommerce.Data.Models.PurchaseOrder
         public decimal Subtotal { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateAdded{ get; set; }
+        public DateTime? DateAdded{ get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateModified { get; set; }
+        public DateTime? DateModified { get; set; }
 
         // Inverse Relationships
 
         // POLine can have 1 PO
         public int PurchaseOrderId { get; set; }
-        public PurchaseOrder PurchaseOrders { get; set; }
+        public virtual PurchaseOrder PurchaseOrders { get; set; }
 
         // POLine can have 1 Product
         public int ProductId { get; set; }
-        public Product.Product Product { get; set; }
+        public virtual Product.Product Product { get; set; }
 
         // POLine can have 1 POShip
         public int PurchaseOrderShipment { get; set; }
-        public PurchaseOrderShipment PurchaePurchaseOrderShipment { get; set; }
+        public virtual PurchaseOrderShipment PurchaePurchaseOrderShipment { get; set; }
 
 
 

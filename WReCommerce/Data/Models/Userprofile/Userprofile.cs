@@ -32,9 +32,9 @@ namespace WReCommerce.Data.Models.Userprofile
 
         public ICollection<AddressShipping> ShippingAddresses { get; set; }
 
-        public ICollection<PurchaseOrder.PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual ICollection<PurchaseOrder.PurchaseOrder> PurchaseOrders { get; set; }
 
-        public ICollection<UserMembership> UserMemberships { get; set; }
+        public virtual ICollection<UserMembership> UserMemberships { get; set; }
 
     }
 }

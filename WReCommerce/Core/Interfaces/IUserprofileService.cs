@@ -6,5 +6,6 @@ namespace WReCommerce.Core.Interfaces
     {
         Userprofile GetUserprofile(int userprofileId);
         Userprofile AddUserprofile(Userprofile userprofile);
+        Userprofile UpdateUserprofile(int userprofileId, Userprofile userprofile);
     }
 }

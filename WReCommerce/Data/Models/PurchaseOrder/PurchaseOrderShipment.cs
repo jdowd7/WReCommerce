@@ -28,10 +28,10 @@ namespace WReCommerce.Data.Models.PurchaseOrder
         public decimal Weight { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateAdded { get; set; }
+        public DateTime? DateAdded { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateModified { get; set; }
+        public DateTime? DateModified { get; set; }
 
 
         // Relationships
@@ -41,7 +41,7 @@ namespace WReCommerce.Data.Models.PurchaseOrder
 
         // Inverse Relationships
         public int PurchaseOrderId { get; set; }
-        public PurchaseOrder PurchaseOrder { get; set; }
+        public virtual PurchaseOrder PurchaseOrder { get; set; }
 
        
 

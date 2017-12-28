@@ -19,18 +19,24 @@ namespace WReCommerce.Core.Services
         private IProductService _productService { get; set; }
         private IUserMembershipRepository _userMembershipRepository { get; set; }
         public IPurchaseOrderShipmentRepository _purchaseOrderShipmentRepository { get; set; }
+        public IUserprofileService _userprofileService { get; set; }
+        public IPurchaseOrderService _purchaseOrderService { get; set; }
 
         public PurchaseOrderRequestService(
             IPurchaseOrderRequestRepository purchaseOrderRequestRepository, 
             IProductService productService, 
             IUserMembershipRepository userMembershipRepository,
-            IPurchaseOrderShipmentRepository purchaseOrderShipmentRepository
+            IPurchaseOrderShipmentRepository purchaseOrderShipmentRepository,
+            IUserprofileService userprofileService,
+            IPurchaseOrderService purchaseOrderService
             )
         {
             _purchaseOrderRequestRepository = purchaseOrderRequestRepository;
             _productService = productService;
             _userMembershipRepository = userMembershipRepository;
             _purchaseOrderShipmentRepository = purchaseOrderShipmentRepository;
+            _userprofileService = userprofileService;
+            _purchaseOrderService = purchaseOrderService;
 
         }
 
@@ -38,6 +44,7 @@ namespace WReCommerce.Core.Services
         {
             // set up the purchase order and poLines
             var purchaseOrder = ProcessPurchaseOrder(orderRequest, out var poResult);
+
 
             return purchaseOrder.ToPurchaseOrderRequest();
         }
@@ -48,7 +55,10 @@ namespace WReCommerce.Core.Services
             {
                 UserProfileId = orderRequest.UserprofileId,
                 RefPurchaseOrderStatus = RefPurchaseOrderStatus.Processing,
-                PurchaseOrderLines = new List<PurchaseOrderLine>()
+                PurchaseOrderLines = new List<PurchaseOrderLine>(),
+                PurchaseOrderShipments = new List<PurchaseOrderShipment>(),
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now
             };
 
             poResult = _purchaseOrderRequestRepository.AddPurchaseOrder(purchaseOrder);
@@ -69,13 +79,14 @@ namespace WReCommerce.Core.Services
                     ProductId = orderIdQuantPair.Key.Id,
                     Quantity = orderIdQuantPair.Value,
                     Subtotal = orderIdQuantPair.Key.UnitCost * orderIdQuantPair.Value,
-                    PurchaseOrderId = poResult.Id
+                    PurchaseOrderId = poResult.Id,
+                    DateAdded = DateTime.Now,
+                    DateModified = DateTime.Now
                 };
 
                 var poLineResult = _purchaseOrderRequestRepository.AddPurchaseOrderLine(poLine);
 
                 if (poLineResult == null) throw new ArgumentNullException(nameof(poLineResult));
-                purchaseOrder.PurchaseOrderLines.Add(poLineResult);
 
                 // Wait for success, then check for product type and handle business rules as requirements directed
                 ProductResolver(purchaseOrder, poLineResult);
@@ -87,34 +98,49 @@ namespace WReCommerce.Core.Services
             var productResult = _productService.GetProduct(poLineResult.ProductId);
             if (productResult == null) throw new ArgumentNullException(nameof(productResult));
 
+            var uprofile = _userprofileService.GetUserprofile(purchaseOrder.UserProfileId);
+            uprofile.UserMemberships = new List<UserMembership>();
+
             // BR1.If the purchase order contains a membership, it should be activated in the customer account immediately.
             if (productResult.ProductForm == RefProductForm.Membership)
             {
                 // Activate the membership and assign membership value
                 // Should check to see if there is already a membership available of the Membership category, if so update that
-                _userMembershipRepository.AddUserMembership(
-                    new UserMembership
-                    {
-                        ProductId = productResult.Id,
-                        UserProfileId = purchaseOrder.UserProfileId,
-                        MembershipInitial = productResult.ProductMembershipValue,
-                        MembershipRemaining = productResult.ProductMembershipValue,
-                        MembershipCategory = productResult.ProductCategory
-                    });
+                var userMembership = new UserMembership
+                {
+                    ProductId = productResult.Id,
+                    UserProfileId = purchaseOrder.UserProfileId,
+                    MembershipInitial = productResult.ProductMembershipValue,
+                    MembershipRemaining = productResult.ProductMembershipValue,
+                    MembershipCategory = productResult.ProductCategory,
+                    DateAdded = DateTime.Now,
+                    DateModified = DateTime.Now
+                };
+                _userMembershipRepository.AddUserMembership(userMembership);
+                
+                //uprofile.UserMemberships.Add(userMembership);
+
+                //_userprofileService.UpdateUserprofile(uprofile.Id, uprofile);
             }
             else if (productResult.ProductForm == RefProductForm.Physical)
             {
                 // BR2. If the purchase order contains a physical product, a shipping slip should be generated.
                 // probably would make more sense to check for a userShipment and see whats its status is, if unshipped update.... but again brevity.
-                _purchaseOrderShipmentRepository.AddPurchaseOrderShipment(
-                    new PurchaseOrderShipment
-                    {
-                        PurchaseOrderId = purchaseOrder.Id,
-                        ShipmentStatus = "Shipping Slip Created",
-                        Weight = productResult.Weight,
-                        TrackingNumber = ShippingLabelGenerator.GenerateShippingLabel(),
-                        Items = 1
-                    });
+                var poShip = new PurchaseOrderShipment
+                {
+                    PurchaseOrderId = purchaseOrder.Id,
+                    ShipmentStatus = "Shipping Slip Created",
+                    Weight = productResult.Weight,
+                    TrackingNumber = ShippingLabelGenerator.GenerateShippingLabel(),
+                    Items = 1,
+                    DateAdded = DateTime.Now,
+                    DateModified = DateTime.Now
+                };
+                _purchaseOrderShipmentRepository.AddPurchaseOrderShipment(poShip);
+
+                //purchaseOrder.PurchaseOrderShipments.Add(poShip);
+
+                //_purchaseOrderService.UpdatePurchaseOrder(purchaseOrder.Id, purchaseOrder);
             }
         }
     }

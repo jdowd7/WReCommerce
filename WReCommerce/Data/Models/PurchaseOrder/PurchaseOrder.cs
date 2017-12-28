@@ -24,10 +24,10 @@ namespace WReCommerce.Data.Models.PurchaseOrder
         public decimal TotalAmount { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateUpdated { get; set; }
+        public DateTime? DateUpdated { get; set; }
 
         // Relationships
         [DefaultValue(0)]
@@ -41,6 +41,6 @@ namespace WReCommerce.Data.Models.PurchaseOrder
 
         // Inverse Relationships
         public int UserProfileId { get; set; }
-        public Userprofile.Userprofile Userprofile { get; set; }
+        public virtual Userprofile.Userprofile Userprofile { get; set; }
     }
 }

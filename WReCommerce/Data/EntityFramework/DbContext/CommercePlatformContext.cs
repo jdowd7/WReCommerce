@@ -18,5 +18,10 @@ namespace WReCommerce.Data.EntityFramework.DbContext
         public virtual DbSet<PurchaseOrderShipment> PurchaseOrderShipments { get; set; }
         public virtual DbSet<UserMembership> UserMemberships { get; set; }
         public virtual DbSet<Userprofile> Userprofiles { get; set; }
+
+        public CommercePlatformContext()
+        {
+            this.Configuration.LazyLoadingEnabled = true;
+        }
     }
 }
