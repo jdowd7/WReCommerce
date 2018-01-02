@@ -20,6 +20,6 @@ namespace WReCommerce.Data.Models.Address
 
         // Inverse Relationships
         public int UserprofileId { get; set; }
-        public Userprofile.Userprofile Userprofile { get; set; }
+        public virtual Userprofile.Userprofile Userprofile { get; set; }
     }
 }

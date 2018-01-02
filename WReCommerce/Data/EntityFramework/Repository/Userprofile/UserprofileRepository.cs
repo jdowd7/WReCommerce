@@ -17,9 +17,6 @@ namespace WReCommerce.Data.EntityFramework.Repository.Userprofile
         public Models.Userprofile.Userprofile Get(int userprofileId)
         {
             return _context.Userprofiles
-                .Include("PurchaseOrders")
-                //.Include("PurchaseOrderShipments")
-                .Include("UserMemberships")
                 .FirstOrDefault(x => x.Id == userprofileId);
         }
 

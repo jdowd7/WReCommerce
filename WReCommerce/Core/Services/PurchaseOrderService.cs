@@ -20,7 +20,7 @@ namespace WReCommerce.Core.Services
 
         public PurchaseOrder AddPurchaseOrder(PurchaseOrder purchaseOrder)
         {
-            throw new System.NotImplementedException();
+            return _purchaseOrderRepository.AddPurchaseOrder(purchaseOrder);
         }
 
         public PurchaseOrder UpdatePurchaseOrder(int purchaseOrderId, PurchaseOrder purchaseOrder)

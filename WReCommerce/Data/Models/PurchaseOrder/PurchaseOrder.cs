@@ -34,10 +34,10 @@ namespace WReCommerce.Data.Models.PurchaseOrder
         public RefPurchaseOrderStatus RefPurchaseOrderStatus { get; set; }
 
         // PO can have many POLines
-        public ICollection<PurchaseOrderLine> PurchaseOrderLines { get; set; }
+        public virtual ICollection<PurchaseOrderLine> PurchaseOrderLines { get; set; }
 
         // PO can have many POShips (break order, etc.)
-        public ICollection<PurchaseOrderShipment> PurchaseOrderShipments { get; set; }
+        public virtual ICollection<PurchaseOrderShipment> PurchaseOrderShipments { get; set; }
 
         // Inverse Relationships
         public int UserProfileId { get; set; }

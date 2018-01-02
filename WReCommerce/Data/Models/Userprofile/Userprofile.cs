@@ -28,9 +28,9 @@ namespace WReCommerce.Data.Models.Userprofile
         public string Email { get; set; }
 
         // Relationships
-        public ICollection<AddressBilling> BillingAddresses { get; set; }
+        public virtual ICollection<AddressBilling> BillingAddresses { get; set; }
 
-        public ICollection<AddressShipping> ShippingAddresses { get; set; }
+        public virtual ICollection<AddressShipping> ShippingAddresses { get; set; }
 
         public virtual ICollection<PurchaseOrder.PurchaseOrder> PurchaseOrders { get; set; }
 

@@ -37,7 +37,7 @@ namespace WReCommerce.Data.Models.PurchaseOrder
         // Relationships
 
         // POShips can have multiple POLines
-        public ICollection<PurchaseOrderLine> PurchaseOrderLines { get; set; }
+        public virtual ICollection<PurchaseOrderLine> PurchaseOrderLines { get; set; }
 
         // Inverse Relationships
         public int PurchaseOrderId { get; set; }

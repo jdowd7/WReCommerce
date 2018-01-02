@@ -25,6 +25,14 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
 
         public IUserprofileService UserprofileService { get; set; }
 
+        public IUserMembershipService UserMembershipService { get; set; }
+
+        public IPurchaseOrderShipmentService PurchaseOrderShipmentService { get; set; }
+
+        public IPurchaseOrderService PurchaseOrderService { get; set; }
+
+        public IPurchaseOrderLineService PurchaseOrderLineService { get; set; }
+
         public Mock<CommercePlatformContext> mockContext { get; set; }
 
         public PurchaseOrderRequestServiceTest()
@@ -42,11 +50,6 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
             var mockSetUsermembership = new Mock<DbSet<UserMembership>>();
             var mockSetPurchaseOrderShipment = new Mock<DbSet<PurchaseOrderShipment>>();
 
-            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.Provider).Returns(mockSetProducts.Provider);
-            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.Expression).Returns(queryableList.Expression);
-            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.ElementType).Returns(queryableList.ElementType);
-            //mockSetProducts.As<IQueryable<Data.Models.Product.Product>>().Setup(m => m.GetEnumerator()).Returns(queryableList.GetEnumerator());
-
             mockContext.Setup(m => m.Products).Returns(mockSetProducts.Object);
             mockContext.Setup(m => m.PurchaseOrders).Returns(mockSetPurchaseOrders.Object);
             mockContext.Setup(m => m.Userprofiles).Returns(mockSetUserprofiles.Object);
@@ -59,6 +62,11 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
             UserprofileService = Container.GetInstance<IUserprofileService>();
             PurchaseOrderRequestService = Container.GetInstance<IPurchaseOrderRequestService>();
             ProductService = Container.GetInstance<IProductService>();
+            UserMembershipService = Container.GetInstance<IUserMembershipService>();
+            PurchaseOrderShipmentService = Container.GetInstance<IPurchaseOrderShipmentService>();
+            PurchaseOrderLineService = Container.GetInstance<IPurchaseOrderLineService>();
+            PurchaseOrderService = Container.GetInstance<IPurchaseOrderService>();
+
         }
 
         [Fact]
@@ -141,9 +149,11 @@ namespace WReCommerce.Test.Integration.Core.Services.PurchaseOrder
                 //Assert
                 result.Success.Should().BeTrue();
 
+                var testUser = UserprofileService.GetUserprofile(orderReq.UserprofileId);
+
                 // check business reqs on shipment
-                result.PurchaseOrder.PurchaseOrderShipments.ToList().Should().NotBeEmpty();
-                result.PurchaseOrder.PurchaseOrderShipments.ToList().FirstOrDefault()?.TrackingNumber.Should().HaveLength(32);
+                result.PurchaseOrder.PurchaseOrderShipments.Where(x => x.PurchaseOrderId == result.PurchaseOrder.Id).Should().NotBeEmpty();
+                result.PurchaseOrder.PurchaseOrderShipments.FirstOrDefault(x => x.PurchaseOrderId == result.PurchaseOrder.Id)?.TrackingNumber.Should().HaveLength(32);
                 
                 // check business reqs on membership
                 result.PurchaseOrder.Userprofile.UserMemberships.ToList().Should().NotBeEmpty();

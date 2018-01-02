@@ -16,25 +16,26 @@ namespace WReCommerce.Core.Services
     {
 
         private IPurchaseOrderRequestRepository _purchaseOrderRequestRepository { get; set; }
+
         private IProductService _productService { get; set; }
-        private IUserMembershipRepository _userMembershipRepository { get; set; }
-        public IPurchaseOrderShipmentRepository _purchaseOrderShipmentRepository { get; set; }
+        private IUserMembershipService _userMembershipService { get; set; }
+        public IPurchaseOrderShipmentService _purchaseOrderShipmentService { get; set; }
         public IUserprofileService _userprofileService { get; set; }
         public IPurchaseOrderService _purchaseOrderService { get; set; }
 
         public PurchaseOrderRequestService(
             IPurchaseOrderRequestRepository purchaseOrderRequestRepository, 
             IProductService productService, 
-            IUserMembershipRepository userMembershipRepository,
-            IPurchaseOrderShipmentRepository purchaseOrderShipmentRepository,
+            IUserMembershipService userMembershipService,
+            IPurchaseOrderShipmentService purchaseOrderShipmentService,
             IUserprofileService userprofileService,
             IPurchaseOrderService purchaseOrderService
             )
         {
             _purchaseOrderRequestRepository = purchaseOrderRequestRepository;
             _productService = productService;
-            _userMembershipRepository = userMembershipRepository;
-            _purchaseOrderShipmentRepository = purchaseOrderShipmentRepository;
+            _userMembershipService = userMembershipService;
+            _purchaseOrderShipmentService = purchaseOrderShipmentService;
             _userprofileService = userprofileService;
             _purchaseOrderService = purchaseOrderService;
 
@@ -45,7 +46,7 @@ namespace WReCommerce.Core.Services
             // set up the purchase order and poLines
             var purchaseOrder = ProcessPurchaseOrder(orderRequest, out var poResult);
 
-
+            var tryPoResult = poResult.ToPurchaseOrderRequest();
             return purchaseOrder.ToPurchaseOrderRequest();
         }
 
@@ -61,7 +62,9 @@ namespace WReCommerce.Core.Services
                 DateUpdated = DateTime.Now
             };
 
-            poResult = _purchaseOrderRequestRepository.AddPurchaseOrder(purchaseOrder);
+
+            //poResult = _purchaseOrderRequestRepository.AddPurchaseOrder(purchaseOrder);
+            poResult = _purchaseOrderService.AddPurchaseOrder(purchaseOrder);
 
             if (poResult == null) throw new ArgumentNullException(nameof(purchaseOrder));
 
@@ -116,7 +119,7 @@ namespace WReCommerce.Core.Services
                     DateAdded = DateTime.Now,
                     DateModified = DateTime.Now
                 };
-                _userMembershipRepository.AddUserMembership(userMembership);
+                _userMembershipService.AddUserMembership(userMembership);
                 
                 //uprofile.UserMemberships.Add(userMembership);
 
@@ -136,7 +139,7 @@ namespace WReCommerce.Core.Services
                     DateAdded = DateTime.Now,
                     DateModified = DateTime.Now
                 };
-                _purchaseOrderShipmentRepository.AddPurchaseOrderShipment(poShip);
+                _purchaseOrderShipmentService.AddPurchaseOrderShipment(poShip);
 
                 //purchaseOrder.PurchaseOrderShipments.Add(poShip);
 

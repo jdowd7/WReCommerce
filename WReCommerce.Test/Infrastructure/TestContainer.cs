@@ -21,7 +21,8 @@ namespace WReCommerce.Test.Infrastructure
 
         public TestContainer()
         {
-            Container = new Container();
+            Container = GetAutoMockingContainer();
+                //new Container();
             var lifeStyle = Lifestyle.Singleton;
 
             // services
@@ -29,12 +30,16 @@ namespace WReCommerce.Test.Infrastructure
             Container.Register<IPurchaseOrderRequestService, PurchaseOrderRequestService>();
             Container.Register<IUserprofileService, UserprofileService>();
             Container.Register<IPurchaseOrderService, PurchaseOrderService>();
+            Container.Register<IPurchaseOrderLineService, PurchaseOrderLineService>();
+            Container.Register<IUserMembershipService, UserMembershipService>();
+            Container.Register<IPurchaseOrderShipmentService, PurchaseOrderShipmentService>();
 
             // repos
             Container.Register<IProductRepository, ProductRepository>();
             Container.Register<IUserprofileRepository, UserprofileRepository>();
             Container.Register<IUserMembershipRepository, UserMembershipRepository>();
             Container.Register<IPurchaseOrderRepository, PurchaseOrderRepository>();
+            Container.Register<IPurchaseOrderLineRepository, PurchaseOrderLineRepository>();
             Container.Register<IPurchaseOrderShipmentRepository, PurchaseOrderShipmentRepository>();
             Container.Register<IPurchaseOrderRequestRepository, PurchaseOrderRequestRepository>();
 

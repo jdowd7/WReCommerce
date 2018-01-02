@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\TestContainer.cs" />
     <Compile Include="Integration\Core\Services\Product\ProductServiceTest.cs" />
+    <Compile Include="Integration\Core\Services\PurchaseOrder\PurchaseOrderLineShipmentTest.cs" />
     <Compile Include="Integration\Core\Services\PurchaseOrder\PurchaseOrderRequestServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
